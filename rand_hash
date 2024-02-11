@@ -1,0 +1,43 @@
+#!/bin/bash
+
+v=v0.1.0
+
+help() {
+    echo "help for rand_hash ($v)"
+    echo "Usage:"
+    echo "$0 [opt. integer - min 1, max 32, def 8]"
+    echo ""
+    echo "Example:"
+    echo "$ $0 16"
+    echo "abcd1234defa98762936"
+}
+
+if [ "$#" -gt 1 ]; then
+    echo "too many args."
+    help
+    exit 1
+fi
+
+if [[ $1 =~ ^[0-9]+$ ]]; then
+    len=${1-8}
+else
+    echo "arg '$1' needs to be an integer between 1 and 32"
+    echo
+    help
+    exit 2
+fi
+
+if [ "$len" -lt 1 ] || [ "$len" -gt 32 ]; then
+    echo "length out of bounds: needs to be between 1 and 32."
+    echo
+    help
+    exit 3
+fi
+
+digestcmd=md5sum
+
+if ! command -v $digestcmd &> /dev/null; then
+    digestcmd=md5
+fi
+
+cat /dev/urandom | head | $digestcmd | cut -c1-$len
