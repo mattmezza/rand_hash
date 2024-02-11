@@ -15,7 +15,6 @@ help() {
 if [ "$#" -gt 1 ]; then
     echo "too many args."
     help
-    exit 1
 fi
 
 if [[ $1 =~ ^[0-9]+$ ]]; then
@@ -24,14 +23,12 @@ else
     echo "arg '$1' needs to be an integer between 1 and 32"
     echo
     help
-    exit 2
 fi
 
 if [ "$len" -lt 1 ] || [ "$len" -gt 32 ]; then
     echo "length out of bounds: needs to be between 1 and 32."
     echo
     help
-    exit 3
 fi
 
 digestcmd=md5sum
