@@ -1,1 +1,2 @@
-/home/matteo/dev/rand_hash/rand_hash
+#!/bin/env bash
+alias rand_hash="$PACCO_DIR/rand_hash/rand_hash"
